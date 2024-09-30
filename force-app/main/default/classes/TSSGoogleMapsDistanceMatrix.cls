@@ -6,6 +6,7 @@ public with sharing class TSSGoogleMapsDistanceMatrix {
 
     public static final String DISTANCE_MATRIX_ENDPOINT = '/distancematrix/json';
     public static final String MODE = 'driving';
+    public static String UNITS = 'imperial';
 
     private static String getDistanceMatrixEndpoint() {
         return TSSGoogleMapsAPIConnect.getEndpoint(DISTANCE_MATRIX_ENDPOINT);
@@ -271,6 +272,8 @@ public with sharing class TSSGoogleMapsDistanceMatrix {
 
             queryString += 'mode=' + EncodingUtil.urlEncode(mode, 'UTF-8');
         }
+
+        queryString += '&units=' + UNITS;
 
         return queryString;
     }
