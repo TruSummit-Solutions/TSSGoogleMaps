@@ -26,11 +26,11 @@ public with sharing class TSSGoogleMaps {
         public String getFormattedAddress() {
             String formattedAddress = '';
 
-            if (this.street != null) {
-                formattedAddress += this.street + ', ';
+            if (String.isNotBlank(this.street)) {
+                formattedAddress += this.street;
             }
 
-            if (this.city != null) {
+            if (String.isNotBlank(this.city)) {
                 if (String.isNotBlank(formattedAddress)) {
                     formattedAddress += ', ';
                 }
@@ -38,7 +38,7 @@ public with sharing class TSSGoogleMaps {
                 formattedAddress += this.city;
             }
 
-            if (this.state != null) {
+            if (String.isNotBlank(this.state)) {
                 if (String.isNotBlank(formattedAddress)) {
                     formattedAddress += ', ';
                 }
@@ -46,7 +46,7 @@ public with sharing class TSSGoogleMaps {
                 formattedAddress += this.state;
             }
 
-            if (this.country != null) {
+            if (String.isNotBlank(this.country)) {
                 if (String.isNotBlank(formattedAddress)) {
                     formattedAddress += ', ';
                 }
@@ -139,6 +139,42 @@ public with sharing class TSSGoogleMaps {
         public Decimal getDurationInHours() {
             return this.value / 3600;
         }
+    }
+
+    public enum RoutingPreference {
+        TRAFFIC_AWARE, TRAFFIC_AWARE_OPTIONAL
+    }
+
+    public class RouteResponse {
+        public String status;
+        private List<GoogleRoute> routes;
+
+        public List<GoogleRoute> getRoutes() {
+            for (GoogleRoute route : this.routes) {
+                route.distanceInKilometers = route.distanceMeters / 1000;
+                route.distanceInMiles = route.distanceMeters * 0.000621371;
+                route.durationInSeconds = Decimal.valueOf(route.duration.replaceAll('[^0-9]', ''));
+                route.durationInMinutes = route.durationInSeconds / 60;
+                route.durationInHours = route.durationInSeconds / 3600;
+            }
+
+            return this.routes;
+        }
+    }
+
+    public class GoogleRoute {
+        public Integer distanceMeters;
+        public Decimal distanceInKilometers;
+        public Decimal distanceInMiles;
+        public String duration;
+        public Decimal durationInSeconds;
+        public Decimal durationInMinutes;
+        public Decimal durationInHours;
+        public RoutePolyline polyline;
+    }
+
+    public class RoutePolyline {
+        public String encodedPolyline;
     }
 
     public class GoogleMapsException extends Exception {}
