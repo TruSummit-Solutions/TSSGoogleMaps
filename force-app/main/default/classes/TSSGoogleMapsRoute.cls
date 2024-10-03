@@ -1,3 +1,8 @@
+/**
+ * TSSGoogleMapsRoute - Open Source Google Maps Route API Wrapper for Salesforce
+ * Author: TruSummit Solutions, LLC
+ */
+
 public with sharing class TSSGoogleMapsRoute {
 
     private static final String ROUTE_ENDPOINT = '/directions/v2:computeRoutes';
