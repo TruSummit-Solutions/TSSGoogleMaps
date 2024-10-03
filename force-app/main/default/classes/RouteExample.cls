@@ -31,7 +31,7 @@ public with sharing class RouteExample {
 
         // Make a simple request to retrieve a RouteResponse
         TSSGoogleMapsRoute.RETURN_ROUTE_TOKEN = true;
-        TSSGoogleMapsRoute.ROUTING_PREFERENCE = TSSGoogleMaps.RoutingPreference.TRAFFIC_AWARE;
+        TSSGoogleMapsRoute.ROUTING_PREFERENCE = TSSGoogleMaps.RoutingPreference.TRAFFIC_AWARE; // **WARNING: TRAFFIC_AWARE and TRAFFIC_AWARE_OPTIONAL are billed at a higher rate
         TSSGoogleMaps.RouteResponse response = TSSGoogleMapsRoute.getRoute(origin, destination);
 
         // Output the route details

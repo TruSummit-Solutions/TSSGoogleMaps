@@ -12,7 +12,7 @@ public with sharing class TSSGoogleMapsRoute {
     public static String UNITS = 'imperial';
     public static String REGION_CODE = 'US';
     public static String LANGUAGE_CODE = 'en-US';
-    public static TSSGoogleMaps.RoutingPreference ROUTING_PREFERENCE = TSSGoogleMaps.RoutingPreference.TRAFFIC_AWARE;
+    public static TSSGoogleMaps.RoutingPreference ROUTING_PREFERENCE = TSSGoogleMaps.RoutingPreference.TRAFFIC_UNAWARE;
     public static Boolean RETURN_DURATION = true;
     public static Boolean RETURN_DISTANCE = true;
     public static Boolean RETURN_POLYLINE = true;
@@ -107,6 +107,7 @@ public with sharing class TSSGoogleMapsRoute {
     private static String formatPayloadExtras(Map<String, Object> origin, Map<String, Object> destination) {
         Map<String, Object> payloadMap = new Map<String, Object>{
                 'languageCode' => LANGUAGE_CODE,
+                'routingPreference' => ROUTING_PREFERENCE.name(),
                 'regionCode' => REGION_CODE,
                 'units' => UNITS,
                 'travelMode' => MODE,
@@ -116,8 +117,7 @@ public with sharing class TSSGoogleMapsRoute {
 
         if (RETURN_ROUTE_TOKEN) {
             if (ROUTING_PREFERENCE == TSSGoogleMaps.RoutingPreference.TRAFFIC_AWARE || ROUTING_PREFERENCE == TSSGoogleMaps.RoutingPreference.TRAFFIC_AWARE_OPTIONAL) {
-                payloadMap.put('routingPreference', ROUTING_PREFERENCE.name());
-                payloadMap.put('travelMode', 'DRIVE');
+                payloadMap.put('travelMode', 'DRIVE'); // This mode is required for RETURN_ROUTE_TOKEN
             } else {
                 throw new TSSGoogleMaps.GoogleMapsException('RETURN_ROUTE_TOKEN requires a routingPreference of TRAFFIC_AWARE or TRAFFIC_AWARE_OPTIONAL');
             }

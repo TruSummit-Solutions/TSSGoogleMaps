@@ -142,7 +142,7 @@ public with sharing class TSSGoogleMaps {
     }
 
     public enum RoutingPreference {
-        TRAFFIC_AWARE, TRAFFIC_AWARE_OPTIONAL
+        TRAFFIC_AWARE, TRAFFIC_AWARE_OPTIONAL, TRAFFIC_UNAWARE
     }
 
     public class RouteResponse {
