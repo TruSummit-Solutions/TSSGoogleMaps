@@ -88,7 +88,6 @@ public with sharing class TSSGoogleMapsRoute {
         httpRequest.setMethod('POST');
         httpRequest.setEndpoint(getRoutesEndpoint());
         httpRequest.setBody(payload);
-        System.debug(payload);
 
         setHeaders(httpRequest);
 
