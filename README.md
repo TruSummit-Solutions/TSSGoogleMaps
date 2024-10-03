@@ -5,3 +5,7 @@ This project is an open source collection of Apex classes that make it easy to i
 ## TSSGoogleMapsDistanceMatrix
 
 The TSSGoogleMapsDistanceMatrix class is described here.
+
+## TSSGoogleMapsRoute
+
+The TSSGoogleMapsRoute class is described here!
