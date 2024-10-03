@@ -17,21 +17,45 @@ public with sharing class TSSGoogleMapsRoute {
         return TSSGoogleMapsAPIConnect.getRoutesEndpoint(ROUTE_ENDPOINT);
     }
 
+    /**
+     * @param origin A GoogleMapsLocation object (longitude and latitude) representing the origin
+     * @param destination A GoogleMapsLocation object (longitude and latitude) representing the destination
+     *
+     * @return A formatted RouteResponse object
+     */
     public static TSSGoogleMaps.RouteResponse getRoute(TSSGoogleMaps.GoogleMapsLocation origin, TSSGoogleMaps.GoogleMapsLocation destination) {
         String requestPayload = formatPayload(origin, destination);
         return requestRoute(requestPayload);
     }
 
+    /**
+     * @param originAddr A GoogleMapsAddress object (street address) representing the origin
+     * @param destinationAddr A GoogleMapsAddress object (street address) representing the destination
+     *
+     * @return A formatted RouteResponse object
+     */
     public static TSSGoogleMaps.RouteResponse getRoute(TSSGoogleMaps.GoogleMapsAddress originAddr, TSSGoogleMaps.GoogleMapsAddress destinationAddr) {
         String requestPayload = formatPayload(originAddr, destinationAddr);
         return requestRoute(requestPayload);
     }
 
+    /**
+     * @param origin A GoogleMapsLocation object (longitude and latitude) representing the origin
+     * @param destination A GoogleMapsLocation object (longitude and latitude) representing the destination
+     *
+     * @return A standard HttpResponse instance
+     */
     public static HttpResponse getRouteHttpResponse(TSSGoogleMaps.GoogleMapsLocation origin, TSSGoogleMaps.GoogleMapsLocation destination) {
         String requestPayload = formatPayload(origin, destination);
         return requestRouteHttpResponse(requestPayload);
     }
 
+    /**
+     * @param originAddr A GoogleMapsAddress object (street address) representing the origin
+     * @param destinationAddr A GoogleMapsAddress object (street address) representing the destination
+     *
+     * @return A standard HttpResponse instance
+     */
     public static HttpResponse getRouteHttpResponse(TSSGoogleMaps.GoogleMapsAddress originAddr, TSSGoogleMaps.GoogleMapsAddress destinationAddr) {
         String requestPayload = formatPayload(originAddr, destinationAddr);
         return requestRouteHttpResponse(requestPayload);
