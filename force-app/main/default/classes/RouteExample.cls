@@ -30,6 +30,8 @@ public with sharing class RouteExample {
         TSSGoogleMaps.GoogleMapsLocation destination = new TSSGoogleMaps.GoogleMapsLocation(34.101090, -118.340060);
 
         // Make a simple request to retrieve a RouteResponse
+        TSSGoogleMapsRoute.RETURN_ROUTE_TOKEN = true;
+        TSSGoogleMapsRoute.ROUTING_PREFERENCE = TSSGoogleMaps.RoutingPreference.TRAFFIC_AWARE;
         TSSGoogleMaps.RouteResponse response = TSSGoogleMapsRoute.getRoute(origin, destination);
 
         // Output the route details
@@ -37,6 +39,7 @@ public with sharing class RouteExample {
             for (TSSGoogleMaps.GoogleRoute route : response.getRoutes()) {
                 System.debug('Seconds: ' + route.durationInSeconds);
                 System.debug('Miles: ' + route.distanceInMiles);
+                System.debug('Route Token: ' + route.routeToken);
                 System.debug(route);
             }
         }

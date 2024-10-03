@@ -172,6 +172,7 @@ public with sharing class TSSGoogleMaps {
         public Decimal durationInMinutes;
         public Decimal durationInHours;
         public RoutePolyline polyline;
+        public String routeToken;
     }
 
     public class RoutePolyline {
