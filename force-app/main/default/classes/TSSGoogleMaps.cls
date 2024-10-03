@@ -147,6 +147,7 @@ public with sharing class TSSGoogleMaps {
 
     public class RouteResponse {
         public String status;
+        public Integer statusCode;
         private List<GoogleRoute> routes;
 
         public List<GoogleRoute> getRoutes() {

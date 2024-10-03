@@ -27,12 +27,26 @@ public with sharing class TSSGoogleMapsRoute {
         return requestRoute(requestPayload);
     }
 
+    public static HttpResponse getRouteHttpResponse(TSSGoogleMaps.GoogleMapsLocation origin, TSSGoogleMaps.GoogleMapsLocation destination) {
+        String requestPayload = formatPayload(origin, destination);
+        return requestRouteHttpResponse(requestPayload);
+    }
+
+    public static HttpResponse getRouteHttpResponse(TSSGoogleMaps.GoogleMapsAddress originAddr, TSSGoogleMaps.GoogleMapsAddress destinationAddr) {
+        String requestPayload = formatPayload(originAddr, destinationAddr);
+        return requestRouteHttpResponse(requestPayload);
+    }
+
     private static Map<String, Object> formatLocation(TSSGoogleMaps.GoogleMapsLocation location) {
         Map<String, Object> formattedLocation = new Map<String, Object>();
 
+        Map<String, Object> coordinates = new Map<String, Object>{
+                'longitude' => location.lng,
+                'latitude' => location.lat
+        };
+
         Map<String, Object> latLngMap = new Map<String, Object>{
-                'latitude' => location.lat,
-                'longitude' => location.lng
+                'latLng' => coordinates
         };
 
         formattedLocation.put('location', latLngMap);
@@ -84,6 +98,14 @@ public with sharing class TSSGoogleMapsRoute {
     }
 
     private static TSSGoogleMaps.RouteResponse requestRoute(String payload) {
+        return parseRouteResponse(requestRouteCallout(payload));
+    }
+
+    private static HttpResponse requestRouteHttpResponse(String payload) {
+        return requestRouteCallout(payload);
+    }
+
+    private static HttpResponse requestRouteCallout(String payload) {
         HttpRequest httpRequest = new HttpRequest();
         httpRequest.setMethod('POST');
         httpRequest.setEndpoint(getRoutesEndpoint());
@@ -94,11 +116,19 @@ public with sharing class TSSGoogleMapsRoute {
         Http http = new Http();
         HttpResponse httpResponse = http.send(httpRequest);
 
-        return parseRouteResponse(httpResponse);
+        return httpResponse;
     }
 
     private static TSSGoogleMaps.RouteResponse parseRouteResponse(HttpResponse httpResponse) {
-        TSSGoogleMaps.RouteResponse response = (TSSGoogleMaps.RouteResponse) JSON.deserialize(httpResponse.getBody(), TSSGoogleMaps.RouteResponse.class);
+        TSSGoogleMaps.RouteResponse response;
+        if (httpResponse.getStatusCode() == 200) {
+            response = (TSSGoogleMaps.RouteResponse) JSON.deserialize(httpResponse.getBody(), TSSGoogleMaps.RouteResponse.class);
+        } else {
+            response = new TSSGoogleMaps.RouteResponse();
+        }
+
+        response.status = httpResponse.getStatus();
+        response.statusCode = httpResponse.getStatusCode();
 
         return response;
     }
