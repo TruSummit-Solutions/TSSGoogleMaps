@@ -4,8 +4,8 @@
  */
 public with sharing class TSSGoogleMapsDistanceMatrix {
 
-    public static final String DISTANCE_MATRIX_ENDPOINT = '/distancematrix/json';
-    public static final String MODE = 'driving';
+    private static final String DISTANCE_MATRIX_ENDPOINT = '/distancematrix/json';
+    private static final String MODE = 'driving';
     public static String UNITS = 'imperial';
 
     private static String getDistanceMatrixEndpoint() {
